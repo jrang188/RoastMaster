@@ -1,0 +1,25 @@
+{
+  "id": 1,
+  "name": "Frank Torres: Sidra Natural",
+  "roaster": "September Coffee Co.",
+  "origin": "Colombia",
+  "originType": "Single Origin",
+  "region": "Narino",
+  "producer": "Frank Torres",
+  "variety": "Caturra",
+  "altitudeMASL": 1850,
+  "process": "Honey",
+  "caffeine": "Full Caffeine",
+  "brewMethods": [
+    "Espresso"
+  ],
+  "roastLevel": "Light",
+  "tastingNotes": [
+    "Red fruits",
+    "Watermelon",
+    "Grape"
+  ],
+  "quantity": 250,
+  "price": 23.00,
+  "currency": "CAD"
+}
