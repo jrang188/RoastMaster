@@ -14,9 +14,9 @@ import java.util.List;
 public class CoffeeController {
 
     @GetMapping("/{id}")
-    private ResponseEntity<Coffee> findById(@PathVariable Long id) {
+    public ResponseEntity<Coffee> findById(@PathVariable Long id) {
         Coffee coffee = new Coffee(
-                88L,
+                id,
                 "Frank Torres: Sidra Natural",
                 "September Coffee Co.",
                 "Colombia",
