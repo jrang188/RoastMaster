@@ -27,9 +27,8 @@ public class Coffee {
     private double price;
     private String currency;
 
-    @ElementCollection
-    @CollectionTable(name = "brew_methods", joinColumns = @JoinColumn(name = "coffee_id"))
-    private List<BrewMethod> brewMethods;
+    @Enumerated(EnumType.STRING)
+    private BrewMethodType brewMethod;
 
     @ElementCollection
     @CollectionTable(name = "tasting_notes", joinColumns = @JoinColumn(name = "coffee_id"))
@@ -54,10 +53,9 @@ public class Coffee {
         this.quantity = builder.quantity;
         this.price = builder.price;
         this.currency = builder.currency;
-        this.brewMethods = builder.brewMethods;
+        this.brewMethod = builder.brewMethod;
         this.tastingNotes = builder.tastingNotes;
     }
-
 
     public static class Builder {
         private Long id;
@@ -75,7 +73,7 @@ public class Coffee {
         private int quantity;
         private double price;
         private String currency;
-        private List<BrewMethod> brewMethods;
+        private BrewMethodType brewMethod;
         private List<TastingNote> tastingNotes;
 
         public Builder id(Long id) {
@@ -153,8 +151,8 @@ public class Coffee {
             return this;
         }
 
-        public Builder brewMethods(List<BrewMethod> brewMethods) {
-            this.brewMethods = brewMethods;
+        public Builder brewMethod(BrewMethodType brewMethod) {
+            this.brewMethod = brewMethod;
             return this;
         }
 
@@ -289,12 +287,12 @@ public class Coffee {
         this.currency = currency;
     }
 
-    public List<BrewMethod> getBrewMethods() {
-        return brewMethods;
+    public BrewMethodType getBrewMethod() {
+        return brewMethod;
     }
 
-    public void setBrewMethods(List<BrewMethod> brewMethods) {
-        this.brewMethods = brewMethods;
+    public void setBrewMethod(BrewMethodType brewMethod) {
+        this.brewMethod = brewMethod;
     }
 
     public List<TastingNote> getTastingNotes() {
@@ -305,18 +303,18 @@ public class Coffee {
         this.tastingNotes = tastingNotes;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coffee coffee = (Coffee) o;
-        return altitudeMASL == coffee.altitudeMASL && quantity == coffee.quantity && Double.compare(price, coffee.price) == 0 && Objects.equals(id, coffee.id) && Objects.equals(name, coffee.name) && Objects.equals(roaster, coffee.roaster) && Objects.equals(origin, coffee.origin) && Objects.equals(originType, coffee.originType) && Objects.equals(region, coffee.region) && Objects.equals(producer, coffee.producer) && Objects.equals(variety, coffee.variety) && Objects.equals(process, coffee.process) && Objects.equals(caffeine, coffee.caffeine) && Objects.equals(roastLevel, coffee.roastLevel) && Objects.equals(currency, coffee.currency) && Objects.equals(brewMethods, coffee.brewMethods) && Objects.equals(tastingNotes, coffee.tastingNotes);
+        return altitudeMASL == coffee.altitudeMASL && quantity == coffee.quantity && Double.compare(price, coffee.price) == 0 && Objects.equals(id, coffee.id) && Objects.equals(name, coffee.name) && Objects.equals(roaster, coffee.roaster) && Objects.equals(origin, coffee.origin) && Objects.equals(originType, coffee.originType) && Objects.equals(region, coffee.region) && Objects.equals(producer, coffee.producer) && Objects.equals(variety, coffee.variety) && Objects.equals(process, coffee.process) && Objects.equals(caffeine, coffee.caffeine) && Objects.equals(roastLevel, coffee.roastLevel) && Objects.equals(currency, coffee.currency) && brewMethod == coffee.brewMethod && Objects.equals(tastingNotes, coffee.tastingNotes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, roaster, origin, originType, region, producer, variety, altitudeMASL, process, caffeine, roastLevel, quantity, price, currency, brewMethods, tastingNotes);
+        return Objects.hash(id, name, roaster, origin, originType, region, producer, variety, altitudeMASL, process, caffeine, roastLevel, quantity, price, currency, brewMethod, tastingNotes);
     }
-
 }
 

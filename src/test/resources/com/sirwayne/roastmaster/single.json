@@ -14,11 +14,7 @@
   "quantity": 250,
   "price": 23.00,
   "currency": "CAD",
-  "brewMethods": [
-    {
-      "method": "Espresso"
-    }
-  ],
+  "brewMethod": "ESPRESSO",
   "tastingNotes": [
     {
       "note": "Red fruits"

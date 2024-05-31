@@ -34,8 +34,7 @@ class RoastMasterApplicationTests {
         Number id = context.read("$.id");
         assertThat(id).isEqualTo(88);
 
-        List<BrewMethod> brewMethods = objectMapper.convertValue(context.read("$.brewMethods"), new TypeReference<List<BrewMethod>>() {
-        });
+        BrewMethodType brewMethod = BrewMethodType.valueOf(context.read("$.brewMethod", String.class));
         List<TastingNote> tastingNotes = objectMapper.convertValue(context.read("$.tastingNotes"), new TypeReference<List<TastingNote>>() {
         });
 
@@ -55,7 +54,7 @@ class RoastMasterApplicationTests {
                 .quantity(context.read("$.quantity"))
                 .price(context.read("$.price"))
                 .currency(context.read("$.currency"))
-                .brewMethods(brewMethods)
+                .brewMethod(brewMethod)
                 .tastingNotes(tastingNotes)
                 .build();
 
@@ -75,7 +74,7 @@ class RoastMasterApplicationTests {
                 .quantity(250)
                 .price(23.00)
                 .currency("CAD")
-                .brewMethods(List.of(new BrewMethod(null, "Espresso")))
+                .brewMethod(BrewMethodType.ESPRESSO)
                 .tastingNotes(List.of(new TastingNote(null, "Red fruits"), new TastingNote(null, "Watermelon"), new TastingNote(null, "Grape")))
                 .build();
 

@@ -31,7 +31,7 @@ public class CoffeeController {
                 .quantity(250)
                 .price(23.00)
                 .currency("CAD")
-                .brewMethods(List.of(new BrewMethod(null, "Espresso")))
+                .brewMethod(BrewMethodType.ESPRESSO)
                 .tastingNotes(List.of(new TastingNote(null, "Red fruits"), new TastingNote(null, "Watermelon"), new TastingNote(null, "Grape")))
                 .build();
 

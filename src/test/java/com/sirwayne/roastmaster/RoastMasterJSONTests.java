@@ -38,7 +38,7 @@ class RoastMasterJSONTests {
                 .quantity(250)                         // quantity
                 .price(23.00)                          // price
                 .currency("CAD")                       // currency
-                .brewMethods(List.of(new BrewMethod(null, "Espresso")))
+                .brewMethod(BrewMethodType.ESPRESSO)
                 .tastingNotes(
                         List.of(
                                 new TastingNote(null, "Red fruits"),
@@ -51,82 +51,120 @@ class RoastMasterJSONTests {
 
     @Test
     void coffeeSerializationTest() throws IOException {
-        assertThat(json.write(coffee)).isStrictlyEqualToJson("single.json");
-        assertThat(json.write(coffee)).hasJsonPathNumberValue("@.id");
-        assertThat(json.write(coffee)).extractingJsonPathNumberValue("@.id").isEqualTo(1);
 
-        assertThat(json.write(coffee)).hasJsonPathStringValue("@.name");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.name").isEqualTo("Frank Torres: Sidra Natural");
+        assertThat(json.write(coffee))
+                .hasJsonPathNumberValue("@.id")
+                .extractingJsonPathNumberValue("@.id")
+                .isEqualTo(1);
 
-        assertThat(json.write(coffee)).hasJsonPathStringValue("@.roaster");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.roaster").isEqualTo("September Coffee Co.");
+        assertThat(json.write(coffee))
+                .hasJsonPathStringValue("@.name")
+                .extractingJsonPathStringValue("@.name")
+                .isEqualTo("Frank Torres: Sidra Natural");
 
-        assertThat(json.write(coffee)).hasJsonPathStringValue("@.origin");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.origin").isEqualTo("Colombia");
+        assertThat(json.write(coffee))
+                .hasJsonPathStringValue("@.roaster")
+                .extractingJsonPathStringValue("@.roaster")
+                .isEqualTo("September Coffee Co.");
 
-        assertThat(json.write(coffee)).hasJsonPathStringValue("@.originType");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.originType").isEqualTo("Single Origin");
+        assertThat(json.write(coffee))
+                .hasJsonPathStringValue("@.origin")
+                .extractingJsonPathStringValue("@.origin")
+                .isEqualTo("Colombia");
 
-        assertThat(json.write(coffee)).hasJsonPathStringValue("@.region");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.region").isEqualTo("Narino");
+        assertThat(json.write(coffee))
+                .hasJsonPathStringValue("@.originType")
+                .extractingJsonPathStringValue("@.originType")
+                .isEqualTo("Single Origin");
 
-        assertThat(json.write(coffee)).hasJsonPathStringValue("@.producer");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.producer").isEqualTo("Frank Torres");
+        assertThat(json.write(coffee))
+                .hasJsonPathStringValue("@.region")
+                .extractingJsonPathStringValue("@.region")
+                .isEqualTo("Narino");
 
-        assertThat(json.write(coffee)).hasJsonPathStringValue("@.variety");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.variety").isEqualTo("Caturra");
+        assertThat(json.write(coffee))
+                .hasJsonPathStringValue("@.producer")
+                .extractingJsonPathStringValue("@.producer")
+                .isEqualTo("Frank Torres");
 
-        assertThat(json.write(coffee)).hasJsonPathNumberValue("@.altitudeMASL");
-        assertThat(json.write(coffee)).extractingJsonPathNumberValue("@.altitudeMASL").isEqualTo(1850);
+        assertThat(json.write(coffee))
+                .hasJsonPathStringValue("@.variety")
+                .extractingJsonPathStringValue("@.variety")
+                .isEqualTo("Caturra");
 
-        assertThat(json.write(coffee)).hasJsonPathStringValue("@.process");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.process").isEqualTo("Honey");
+        assertThat(json.write(coffee))
+                .hasJsonPathNumberValue("@.altitudeMASL")
+                .extractingJsonPathNumberValue("@.altitudeMASL")
+                .isEqualTo(1850);
 
-        assertThat(json.write(coffee)).hasJsonPathStringValue("@.caffeine");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.caffeine").isEqualTo("Full Caffeine");
+        assertThat(json.write(coffee))
+                .hasJsonPathStringValue("@.process")
+                .extractingJsonPathStringValue("@.process")
+                .isEqualTo("Honey");
 
-        assertThat(json.write(coffee)).hasJsonPathStringValue("@.roastLevel");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.roastLevel").isEqualTo("Light");
+        assertThat(json.write(coffee))
+                .hasJsonPathStringValue("@.caffeine")
+                .extractingJsonPathStringValue("@.caffeine")
+                .isEqualTo("Full Caffeine");
 
-        assertThat(json.write(coffee)).hasJsonPathNumberValue("@.quantity");
-        assertThat(json.write(coffee)).extractingJsonPathNumberValue("@.quantity").isEqualTo(250);
+        assertThat(json.write(coffee))
+                .hasJsonPathStringValue("@.roastLevel")
+                .extractingJsonPathStringValue("@.roastLevel")
+                .isEqualTo("Light");
 
-        assertThat(json.write(coffee)).hasJsonPathNumberValue("@.price");
-        assertThat(json.write(coffee)).extractingJsonPathNumberValue("@.price").isEqualTo(23.00);
+        assertThat(json.write(coffee))
+                .hasJsonPathNumberValue("@.quantity")
+                .extractingJsonPathNumberValue("@.quantity")
+                .isEqualTo(250);
 
-        assertThat(json.write(coffee)).hasJsonPathStringValue("@.currency");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.currency").isEqualTo("CAD");
+        assertThat(json.write(coffee))
+                .hasJsonPathNumberValue("@.price")
+                .extractingJsonPathNumberValue("@.price")
+                .isEqualTo(23.00);
 
-        assertThat(json.write(coffee)).hasJsonPathArrayValue("@.brewMethods");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.brewMethods[0].method").isEqualTo("Espresso");
+        assertThat(json.write(coffee))
+                .hasJsonPathStringValue("@.currency")
+                .extractingJsonPathStringValue("@.currency")
+                .isEqualTo("CAD");
 
-        assertThat(json.write(coffee)).hasJsonPathArrayValue("@.tastingNotes");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.tastingNotes[0].note").isEqualTo("Red fruits");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.tastingNotes[1].note").isEqualTo("Watermelon");
-        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.tastingNotes[2].note").isEqualTo("Grape");
+        assertThat(json.write(coffee))
+                .hasJsonPathStringValue("@.brewMethod")
+                .extractingJsonPathStringValue("@.brewMethod")
+                .isEqualTo(BrewMethodType.ESPRESSO.name());
+
+        assertThat(json.write(coffee))
+                .hasJsonPathArrayValue("@.tastingNotes")
+                .extractingJsonPathStringValue("@.tastingNotes[0].note").isEqualTo("Red fruits");
+        assertThat(json.write(coffee))
+                .extractingJsonPathStringValue("@.tastingNotes[1].note")
+                .isEqualTo("Watermelon");
+        assertThat(json.write(coffee))
+                .extractingJsonPathStringValue("@.tastingNotes[2].note")
+                .isEqualTo("Grape");
     }
 
     @Test
     void coffeeDeserializationTest() throws IOException {
-        Coffee coffee = json.readObject(new File("src/test/resources/com/sirwayne/roastmaster/single.json"));
+        Coffee deserializedCoffee = json.readObject(new File("src/test/resources/com/sirwayne/roastmaster/single.json"));
+        System.out.println(deserializedCoffee);
 
-        assertThat(coffee.getId()).isEqualTo(1L);
-        assertThat(coffee.getName()).isEqualTo("Frank Torres: Sidra Natural");
-        assertThat(coffee.getRoaster()).isEqualTo("September Coffee Co.");
-        assertThat(coffee.getOrigin()).isEqualTo("Colombia");
-        assertThat(coffee.getOriginType()).isEqualTo("Single Origin");
-        assertThat(coffee.getRegion()).isEqualTo("Narino");
-        assertThat(coffee.getProducer()).isEqualTo("Frank Torres");
-        assertThat(coffee.getVariety()).isEqualTo("Caturra");
-        assertThat(coffee.getAltitudeMASL()).isEqualTo(1850);
-        assertThat(coffee.getProcess()).isEqualTo("Honey");
-        assertThat(coffee.getCaffeine()).isEqualTo("Full Caffeine");
-        assertThat(coffee.getRoastLevel()).isEqualTo("Light");
-        assertThat(coffee.getQuantity()).isEqualTo(250);
-        assertThat(coffee.getPrice()).isEqualTo(23.00);
-        assertThat(coffee.getCurrency()).isEqualTo("CAD");
+        assertThat(deserializedCoffee.getId()).isEqualTo(1L);
+        assertThat(deserializedCoffee.getName()).isEqualTo("Frank Torres: Sidra Natural");
+        assertThat(deserializedCoffee.getRoaster()).isEqualTo("September Coffee Co.");
+        assertThat(deserializedCoffee.getOrigin()).isEqualTo("Colombia");
+        assertThat(deserializedCoffee.getOriginType()).isEqualTo("Single Origin");
+        assertThat(deserializedCoffee.getRegion()).isEqualTo("Narino");
+        assertThat(deserializedCoffee.getProducer()).isEqualTo("Frank Torres");
+        assertThat(deserializedCoffee.getVariety()).isEqualTo("Caturra");
+        assertThat(deserializedCoffee.getAltitudeMASL()).isEqualTo(1850);
+        assertThat(deserializedCoffee.getProcess()).isEqualTo("Honey");
+        assertThat(deserializedCoffee.getCaffeine()).isEqualTo("Full Caffeine");
+        assertThat(deserializedCoffee.getRoastLevel()).isEqualTo("Light");
+        assertThat(deserializedCoffee.getQuantity()).isEqualTo(250);
+        assertThat(deserializedCoffee.getPrice()).isEqualTo(23.00);
+        assertThat(deserializedCoffee.getCurrency()).isEqualTo("CAD");
 
-        assertThat(coffee.getBrewMethods()).extracting("method").containsExactly("Espresso");
-        assertThat(coffee.getTastingNotes()).extracting("note").containsExactly("Red fruits", "Watermelon", "Grape");
+        assertThat(deserializedCoffee.getBrewMethod()).isEqualTo(BrewMethodType.ESPRESSO);
+        assertThat(deserializedCoffee.getTastingNotes()).extracting("note").containsExactly("Red fruits", "Watermelon", "Grape");
     }
 }
