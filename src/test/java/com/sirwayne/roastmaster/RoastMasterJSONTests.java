@@ -8,6 +8,7 @@ import org.springframework.boot.test.json.JacksonTester;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,6 +38,14 @@ class RoastMasterJSONTests {
                 .quantity(250)                         // quantity
                 .price(23.00)                          // price
                 .currency("CAD")                       // currency
+                .brewMethods(List.of(new BrewMethod(null, "Espresso")))
+                .tastingNotes(
+                        List.of(
+                                new TastingNote(null, "Red fruits"),
+                                new TastingNote(null, "Watermelon"),
+                                new TastingNote(null, "Grape")
+                        )
+                )
                 .build();
     }
 
@@ -88,13 +97,13 @@ class RoastMasterJSONTests {
         assertThat(json.write(coffee)).hasJsonPathStringValue("@.currency");
         assertThat(json.write(coffee)).extractingJsonPathStringValue("@.currency").isEqualTo("CAD");
 
-//        assertThat(json.write(coffee)).hasJsonPathArrayValue("@.brewMethods");
-//        assertThat(json.write(coffee)).extractingJsonPathArrayValue("@.brewMethods").isEqualTo(List.of("Espresso"));
-//
-//        assertThat(json.write(coffee)).hasJsonPathArrayValue("@.tastingNotes");
-//        assertThat(json.write(coffee)).extractingJsonPathArrayValue("@.tastingNotes").isEqualTo(List.of("Red fruits", "Watermelon", "Grape"));
+        assertThat(json.write(coffee)).hasJsonPathArrayValue("@.brewMethods");
+        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.brewMethods[0].method").isEqualTo("Espresso");
 
-
+        assertThat(json.write(coffee)).hasJsonPathArrayValue("@.tastingNotes");
+        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.tastingNotes[0].note").isEqualTo("Red fruits");
+        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.tastingNotes[1].note").isEqualTo("Watermelon");
+        assertThat(json.write(coffee)).extractingJsonPathStringValue("@.tastingNotes[2].note").isEqualTo("Grape");
     }
 
     @Test
@@ -112,11 +121,12 @@ class RoastMasterJSONTests {
         assertThat(coffee.getAltitudeMASL()).isEqualTo(1850);
         assertThat(coffee.getProcess()).isEqualTo("Honey");
         assertThat(coffee.getCaffeine()).isEqualTo("Full Caffeine");
-//        assertThat(coffee.brewMethods()).isEqualTo(List.of("Espresso"));
         assertThat(coffee.getRoastLevel()).isEqualTo("Light");
-//        assertThat(coffee.tastingNotes()).isEqualTo(java.util.Arrays.asList("Red fruits", "Watermelon", "Grape"));
         assertThat(coffee.getQuantity()).isEqualTo(250);
         assertThat(coffee.getPrice()).isEqualTo(23.00);
         assertThat(coffee.getCurrency()).isEqualTo("CAD");
+
+        assertThat(coffee.getBrewMethods()).extracting("method").containsExactly("Espresso");
+        assertThat(coffee.getTastingNotes()).extracting("note").containsExactly("Red fruits", "Watermelon", "Grape");
     }
 }

@@ -10,16 +10,24 @@
   "altitudeMASL": 1850,
   "process": "Honey",
   "caffeine": "Full Caffeine",
-  "brewMethods": [
-    "Espresso"
-  ],
   "roastLevel": "Light",
-  "tastingNotes": [
-    "Red fruits",
-    "Watermelon",
-    "Grape"
-  ],
   "quantity": 250,
   "price": 23.00,
-  "currency": "CAD"
+  "currency": "CAD",
+  "brewMethods": [
+    {
+      "method": "Espresso"
+    }
+  ],
+  "tastingNotes": [
+    {
+      "note": "Red fruits"
+    },
+    {
+      "note": "Watermelon"
+    },
+    {
+      "note": "Grape"
+    }
+  ]
 }

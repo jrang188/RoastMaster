@@ -1,5 +1,7 @@
 package com.sirwayne.roastmaster;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,9 @@ class RoastMasterApplicationTests {
     @Autowired
     TestRestTemplate restTemplate;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     @Test
     void shouldReturnCoffeeWhenDataIsSaved() {
         ResponseEntity<String> response = restTemplate.getForEntity("/coffee/88", String.class);
@@ -28,6 +33,11 @@ class RoastMasterApplicationTests {
         DocumentContext context = JsonPath.parse(response.getBody());
         Number id = context.read("$.id");
         assertThat(id).isEqualTo(88);
+
+        List<BrewMethod> brewMethods = objectMapper.convertValue(context.read("$.brewMethods"), new TypeReference<List<BrewMethod>>() {
+        });
+        List<TastingNote> tastingNotes = objectMapper.convertValue(context.read("$.tastingNotes"), new TypeReference<List<TastingNote>>() {
+        });
 
         Coffee coffee = new Coffee.Builder()
                 .id(id.longValue())
@@ -45,9 +55,8 @@ class RoastMasterApplicationTests {
                 .quantity(context.read("$.quantity"))
                 .price(context.read("$.price"))
                 .currency(context.read("$.currency"))
-                // Uncomment and modify the following lines if you have logic to convert the context read values to lists
-                // .brewMethods(context.read("$.brewMethods"))
-                // .tastingNotes(context.read("$.tastingNotes"))
+                .brewMethods(brewMethods)
+                .tastingNotes(tastingNotes)
                 .build();
 
         Coffee expectedCoffee = new Coffee.Builder()
@@ -66,12 +75,10 @@ class RoastMasterApplicationTests {
                 .quantity(250)
                 .price(23.00)
                 .currency("CAD")
-                // Uncomment and modify the following lines if you have logic to convert the context read values to lists
-                // .brewMethods(List.of(new BrewMethod(null, "Espresso")))
-                // .tastingNotes(List.of(new TastingNote(null, "Red fruits"), new TastingNote(null, "Watermelon"), new TastingNote(null, "Grape")))
+                .brewMethods(List.of(new BrewMethod(null, "Espresso")))
+                .tastingNotes(List.of(new TastingNote(null, "Red fruits"), new TastingNote(null, "Watermelon"), new TastingNote(null, "Grape")))
                 .build();
 
         assertThat(coffee).isEqualTo(expectedCoffee);
-
     }
 }
